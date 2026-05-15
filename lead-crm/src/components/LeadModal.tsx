@@ -13,7 +13,7 @@ export default function LeadModal({ isOpen, onClose, lead, onSave }: Props) {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', source: 'Website' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [touchedEmail, setTouchedEmail] = useState(false); // Tracks if user clicked out of email box
+  const [touchedEmail, setTouchedEmail] = useState(false);
 
   useEffect(() => {
     if (lead) {
@@ -53,7 +53,7 @@ export default function LeadModal({ isOpen, onClose, lead, onSave }: Props) {
       onSave();
       onClose();
     } catch (err) {
-      setError('Failed to save lead. Please try again.');
+      setError('System Error: Could not save lead.');
     } finally {
       setIsSubmitting(false);
     }
@@ -68,7 +68,7 @@ export default function LeadModal({ isOpen, onClose, lead, onSave }: Props) {
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }} noValidate>
           <div>
-            <label style={{ fontSize: '12px', fontWeight: 600, color: '#64748b', display: 'block', marginBottom: '4px' }}>Name <span style={{color: '#ef4444'}}>*</span></label>
+            <label style={{ fontSize: '12px', fontWeight: 600, color: '#64748b', display: 'block', marginBottom: '4px' }}>Name *</label>
             <input 
               className="control-input" 
               style={{width: '100%'}} 
@@ -79,34 +79,36 @@ export default function LeadModal({ isOpen, onClose, lead, onSave }: Props) {
           </div>
 
           <div>
-            <label style={{ fontSize: '12px', fontWeight: 600, color: '#64748b', display: 'block', marginBottom: '4px' }}>Email Address <span style={{color: '#ef4444'}}>*</span></label>
+            <label style={{ fontSize: '12px', fontWeight: 600, color: '#64748b', display: 'block', marginBottom: '4px' }}>Email Address *</label>
             <input 
               className="control-input" 
               type="email" 
               style={{
                 width: '100%', 
-                // Only turn red if they typed something invalid AND clicked away
-                borderColor: touchedEmail && formData.email && !isValidEmail(formData.email) ? '#ef4444' : '#e2e8f0'
+                borderColor: touchedEmail && !isValidEmail(formData.email) ? '#ef4444' : '#e2e8f0'
               }} 
               placeholder="e.g. john@example.com"
               value={formData.email} 
-              onChange={e => setFormData({...formData, email: e.target.value})} 
-              onBlur={() => setTouchedEmail(true)} // User clicked away
+              onBlur={() => setTouchedEmail(true)}
+              onChange={e => {
+                setFormData({...formData, email: e.target.value});
+                if (isValidEmail(e.target.value)) setTouchedEmail(false);
+              }} 
             />
-            {touchedEmail && formData.email && !isValidEmail(formData.email) && (
+            {touchedEmail && !isValidEmail(formData.email) && (
               <span style={{ color: '#ef4444', fontSize: '11px', marginTop: '6px', display: 'block', fontWeight: 500 }}>
-                Please enter a valid email address.
+                Invalid email format (e.g. user@domain.com)
               </span>
             )}
           </div>
 
           <div>
-            <label style={{ fontSize: '12px', fontWeight: 600, color: '#64748b', display: 'block', marginBottom: '4px' }}>Phone Number (Optional)</label>
+            <label style={{ fontSize: '12px', fontWeight: 600, color: '#64748b', display: 'block', marginBottom: '4px' }}>Phone Number</label>
             <input 
               className="control-input" 
               type="tel" 
               style={{width: '100%'}} 
-              placeholder="e.g. +1 555 0123"
+              placeholder="Optional"
               value={formData.phone} 
               onChange={e => setFormData({...formData, phone: e.target.value})} 
             />
@@ -119,15 +121,19 @@ export default function LeadModal({ isOpen, onClose, lead, onSave }: Props) {
               <option value="Referral">Referral</option>
               <option value="Campaign">Campaign</option>
               <option value="Cold-Outreach">Cold-Outreach</option>
-              <option value="Event">Event</option>
             </select>
           </div>
 
           <div style={{ display: 'flex', gap: '12px', marginTop: '16px' }}>
-            <button type="submit" className="btn btn-primary" disabled={!isFormValid || isSubmitting} style={{ flex: 1 }}>
+            <button 
+              type="submit" 
+              className="btn btn-primary" 
+              disabled={!isFormValid || isSubmitting} 
+              style={{ flex: 1, opacity: !isFormValid ? 0.5 : 1 }}
+            >
               {isSubmitting ? 'Saving...' : 'Save Lead'}
             </button>
-            <button type="button" className="btn" onClick={onClose} disabled={isSubmitting} style={{ flex: 1, background: '#f1f5f9', color: '#475569' }}>
+            <button type="button" className="btn" onClick={onClose} style={{ flex: 1, background: '#f1f5f9', color: '#475569' }}>
               Cancel
             </button>
           </div>
