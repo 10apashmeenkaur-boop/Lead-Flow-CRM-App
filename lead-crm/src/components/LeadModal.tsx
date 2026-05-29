@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { createLead, updateLeadDetails } from '../api/leads';
-import { Lead } from '../types';
+import type { Lead } from '../types';
 
 interface Props { 
   isOpen: boolean; 

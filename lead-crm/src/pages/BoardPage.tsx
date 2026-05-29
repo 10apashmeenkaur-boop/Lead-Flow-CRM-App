@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { DndContext, closestCorners, DragEndEvent, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
+import { DndContext, closestCorners, type DragEndEvent, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
 import { useSearchParams } from 'react-router-dom';
 import { fetchLeads, updateLeadDetails } from '../api/leads';
 import { BoardColumn } from '../components/BoardColumn';
-import { Lead, LeadStatus, VALID_TRANSITIONS } from '../types';
+import { type Lead, type LeadStatus, VALID_TRANSITIONS } from '../types';
 
 const COLUMNS: LeadStatus[] = ['NEW', 'CONTACTED', 'QUALIFIED', 'CONVERTED', 'LOST'];
 

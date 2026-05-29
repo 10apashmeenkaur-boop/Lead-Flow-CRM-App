@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { fetchLeads, deleteLead, updateLeadDetails } from '../api/leads';
 import LeadModal from '../components/LeadModal';
-import { Lead, LeadStatus, VALID_TRANSITIONS } from '../types';
+import { type Lead, type LeadStatus, VALID_TRANSITIONS } from '../types';
 import { EyeIcon, PencilIcon, TrashIcon, ChevronDownIcon } from '../components/Icons';
 
 export default function LeadsPage() {

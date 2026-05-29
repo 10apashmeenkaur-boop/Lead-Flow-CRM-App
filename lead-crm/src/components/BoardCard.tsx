@@ -1,6 +1,6 @@
 import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
-import { Lead, VALID_TRANSITIONS } from '../types';
+import { type Lead, VALID_TRANSITIONS } from '../types';
 import { MailIcon, CalendarIcon } from './Icons';
 
 export function BoardCard({ lead }: { lead: Lead }) {

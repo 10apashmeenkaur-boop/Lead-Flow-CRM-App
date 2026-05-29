@@ -1,6 +1,6 @@
 import { useDroppable } from '@dnd-kit/core';
 import { BoardCard } from './BoardCard';
-import { Lead } from '../types';
+import type { Lead } from '../types';
 
 interface Props { id: string; title: string; color: {bg: string, text: string}; leads: Lead[]; }
 

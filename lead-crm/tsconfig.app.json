@@ -21,5 +21,5 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["lead-crlead-crm/src/App.tsxad-crm/src/App.tsx"]
+  "include": ["src"]
 }
