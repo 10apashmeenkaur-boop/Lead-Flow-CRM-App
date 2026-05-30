@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:4000/leads";
+const API_URL = "https://lead-flow-crm-app.onrender.com/leads";
 
 export const fetchLeads = async () => {
   const res = await fetch(API_URL);
